@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traveller Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="traveller-details">
+        <h2>Traveller Details</h2>
+        <p>Multiple travellers can now receive booking details & other alerts by just adding their contact info!</p>
+        
+        <div class="traveller-list">
+            {% for traveller in travellers %}
+            <div class="traveller-box">
+                <h3>{{ traveller.first_name }} {{ traveller.last_name }}</h3>
+                <p>Gender: {{ traveller.gender }}</p>
+                <p>Nationality: {{ traveller.nationality }}</p>
+                <p>Date of Birth: {{ traveller.dob }}</p>
+                {% if traveller.email %}
+                <p>Email: {{ traveller.email }}</p>
+                {% endif %}
+                {% if traveller.mobile %}
+                <p>Mobile: {{ traveller.mobile }}</p>
+                {% endif %}
+                <p>Wheelchair Required: {{ 'Yes' if traveller.wheelchair == 'yes' else 'No' }}</p>
+            </div>
+            {% endfor %}
+        </div>
+            <script>
+                function redirectToAddPassengers() {
+                    window.location.href = "{{ url_for('add_passengers') }}";
+                }
+            </script>
+            
+            <button class="continue-btn">Continue</button>
+        </Form>    
+    </div>
+</body>
+</html>

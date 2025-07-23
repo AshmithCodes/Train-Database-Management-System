@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Traveller</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="add-traveller">
+        <h2>Add Traveller</h2>
+        <form action="{{ url_for('add_passengers') }}" method="POST">
+            <label>Gender</label>
+            <select name="gender" required>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+            
+            <label>First & Middle Name</label>
+            <input type="text" name="first_name" placeholder="First & Middle Name" required>
+            
+            <label>Last Name</label>
+            <input type="text" name="last_name" placeholder="Last Name" required>
+            
+            <label>Nationality</label>
+            <input type="text" name="nationality" placeholder="Nationality" required>
+            
+            <label>Date of Birth</label>
+            <input type="date" name="dob" required>
+            
+            <label>Email (Optional)</label>
+            <input type="email" name="email" placeholder="Email">
+            
+            <label>Mobile No (Optional)</label>
+            <input type="tel" name="mobile" placeholder="Mobile No">
+            
+            <input type="checkbox" name="wheelchair" value="yes"> I require wheelchair
+            
+            <button type="submit">Confirm</button>
+        </form>
+    </div>
+</body>
+</html>

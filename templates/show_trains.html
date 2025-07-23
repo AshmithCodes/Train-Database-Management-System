@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Trains</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>All Trains</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert alert-info">
+                    {% for category, message in messages %}
+                        <p class="{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>From City</th>
+                    <th>To City</th>
+                    <th>Travel Date</th>
+                    <th>Departure Time</th>
+                    <th>Arrival Time</th>
+                    <th>Train Operator</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for train in trains %}
+                    <tr>
+                        <td>{{ train[0] }}</td>
+                        <td>{{ train[1] }}</td>
+                        <td>{{ train[2] }}</td>
+                        <td>{{ train[3] }}</td>
+                        <td>{{ train[4] }}</td>
+                        <td>{{ train[5] }}</td>
+                        <td>{{ train[6] }}</td>
+                        <td>INR {{ train[8] }}</td>
+                        <td>
+                            <form action="{{ url_for('delete_train', train_id=train[0]) }}" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="9">No trains available.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('getinfo') }}" class="btn btn-primary">Add New Train</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Train Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Edit Train Details</h1>
+
+    <form action="" method="POST">
+        <label for="from_city">From City:</label>
+        <input type="text" id="from_city" name="from_city" value="{{ train[1] }}" required><br>
+
+        <label for="to_city">To City:</label>
+        <input type="text" id="to_city" name="to_city" value="{{ train[2] }}" required><br>
+
+        <label for="travel_date">Travel Date:</label>
+        <input type="date" id="travel_date" name="travel_date" value="{{ train[3] }}" required><br>
+
+        <label for="departure_time">Departure Time:</label>
+        <input type="time" id="departure_time" name="departure_time" value="{{ train[4] }}" required><br>
+
+        <label for="arrival_time">Arrival Time:</label>
+        <input type="time" id="arrival_time" name="arrival_time" value="{{ train[5] }}" required><br>
+
+        <label for="train_operator">Train Operator:</label>
+        <input type="text" id="train_operator" name="train_operator" value="{{ train[6] }}" required><br>
+
+        <label for="travel_time">Travel Time:</label>
+        <input type="text" id="travel_time" name="travel_time" value="{{ train[7] }}" required><br>
+
+        <label for="changes">Number of Changes:</label>
+        <input type="number" id="changes" name="changes" value="{{ train[8] }}" required><br>
+
+        <label for="price">Price:</label>
+        <input type="number" step="0.01" id="price" name="price" value="{{ train[9] }}" required><br>
+
+        <button class="button-53">Update Train</button>
+    </form>
+
+    <a href="{{ url_for('adminmenu') }}">Back to Admin Menu</a>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Booking Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            background-image: url(https://media.tenor.com/OxqgB6itw-EAAAAe/train-anime.png);
+
+            background-size: cover; /* Fills the entire background */
+            background-position: center; /* Centers the gif */
+            background-repeat: no-repeat; /* Prevents repeating */
+            background-attachment: fixed; /* Keeps the gif in place during scroll */
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form action="{{ url_for('destination') }}" method="POST"> <!-- Updated action -->
+            <!-- From Input -->
+            <div class="input-group">
+                <label for="from">From</label>
+                <input type="text" id="from" name="from" placeholder="Enter City, Station name or Station code" required>
+            </div>
+            
+            <!-- To Input -->
+            <div class="input-group">
+                <label for="to">To</label>
+                <input type="text" id="to" name="to" placeholder="Enter City, Station name or Station code" required>
+            </div>
+            
+            <!-- Date Picker -->
+            <div class="input-group date-group">
+                <label for="date">Date</label>
+                <div class="date-picker">
+                    <input type="date" id="date" name="date" required>
+                </div>
+            </div>
+            <!-- Search Button -->
+            <div class="input-group">
+                <button class="button-53" role="button">login</button>
+            </div>
+        </form>
+        <a href="{{ url_for('login') }}">Back to Login</a>
+    </div>
+</body>
+</html>

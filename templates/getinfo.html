@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Booking Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Enter Train Details</h2>
+        <form action="/getinfo" method="POST">
+            <!-- From Input -->
+            <div class="input-group">
+                <label for="from">From</label>
+                <input type="text" id="from" name="from" placeholder="Enter City, Station name or Station code" required>
+            </div>
+
+            <!-- To Input -->
+            <div class="input-group">
+                <label for="to">To</label>
+                <input type="text" id="to" name="to" placeholder="Enter City, Station name or Station code" required>
+            </div>
+
+            <!-- Date Picker -->
+            <div class="input-group date-group">
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+
+            <!-- Departure Time -->
+            <div class="input-group">
+                <label for="departure_time">Departure Time</label>
+                <input type="time" id="departure_time" name="departure_time" required>
+            </div>
+
+            <!-- Arrival Time -->
+            <div class="input-group">
+                <label for="arrival_time">Arrival Time</label>
+                <input type="time" id="arrival_time" name="arrival_time" required>
+            </div>
+
+            <!-- Train Operator -->
+            <div class="input-group">
+                <label for="train_operator">Train Operator</label>
+                <input type="text" id="train_operator" name="train_operator" placeholder="Enter Operator Name" required>
+            </div>
+
+            <!-- Travel Time -->
+            <div class="input-group">
+                <label for="travel_time">Travel Time</label>
+                <input type="text" id="travel_time" name="travel_time" placeholder="e.g., 2 hours 30 minutes" required>
+            </div>
+
+            <!-- Changes -->
+            <div class="input-group">
+                <label for="changes">Changes</label>
+                <input type="number" id="changes" name="changes" placeholder="Number of Changes" required>
+            </div>
+
+            <!-- Price -->
+            <div class="input-group">
+                <label for="price">Price (INR)</label>
+                <input type="number" step="0.01" id="price" name="price" placeholder="Enter Price" required>
+            </div>
+
+
+            <!-- Submit Button -->
+            <button type="submit" class="search-btn">Submit</button>
+        </form>
+
+        <a href="{{ url_for('login') }}">Back to Login</a>
+    </div>
+</body>
+</html>

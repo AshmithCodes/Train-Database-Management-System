@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    
+</head>
+<body>
+    <div class="journey-tracker">
+        <h2>Journey Tracker</h2>
+    
+        <div class="journey-details">
+            <div class="station">
+                <p><strong>{{ from_station[0] }}</strong></p>
+                <p>Platform {{ from_station[1] }}</p>
+                <p><small>Departure: 15:33</small></p>
+            </div>
+    
+            {% for station in intermediate_stations %}
+            <div class="station">
+                <p>{{ station[0] }}</p>
+                <p>Platform {{ station[3] }}</p>
+                <p><small>Arrival: {{ station[1] }}</small></p>
+                <p><small>Departure: {{ station[2] }}</small></p>
+            </div>
+            {% endfor %}
+    
+            <div class="station">
+                <p><strong>{{ to_station[0] }}</strong></p>
+                <p>Platform {{ to_station[1] }}</p>
+                <p><small>Arrival: 17:44</small></p>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+    .journey-tracker {
+        font-family: Arial, sans-serif;
+    }
+    
+    .journey-details {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+    }
+    
+    .station {
+        margin-bottom: 20px;
+    }
+    
+    .station p {
+        margin: 5px 0;
+    }
+    
+    .station p strong {
+        font-size: 16px;
+    }
+    
+    small {
+        color: gray;
+    }
+    </style>
+    
+    
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Seats</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url(https://i.pinimg.com/originals/b6/eb/9b/b6eb9b94fb21cc17673b532c5e0420e7.gif);
+
+            background-size: cover; /* Fills the entire background */
+            background-position: center; /* Centers the gif */
+            background-repeat: no-repeat; /* Prevents repeating */
+            background-attachment: fixed; /* Keeps the gif in place during scroll */
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .passenger-form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .seat-container {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-gap: 10px;
+        }
+
+        .seat {
+            width: 40px;
+            height: 40px;
+            background-color: #68c5f4;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .seat.selected {
+            background-color: #f54b4b;
+        }
+
+        .seat.unavailable {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .button-53 {
+        background-color: #3DD1E7;
+        border: 0 solid #E5E7EB;
+        box-sizing: border-box;
+        color: #000000;
+        display: flex;
+        font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+        font-size: 1rem;
+        font-weight: 700;
+        justify-content: center;
+        line-height: 1.75rem;
+        padding: .75rem 1.65rem;
+        position: relative;
+        text-align: center;
+        text-decoration: none #000000 solid;
+        text-decoration-thickness: auto;
+        width: 100%;
+        max-width: 460px;
+        position: relative;
+        cursor: pointer;
+        transform: rotate(-2deg);
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        }
+
+        .button-53:focus {
+        outline: 0;
+        }
+
+        .button-53:after {
+        content: '';
+        position: absolute;
+        border: 1px solid #000000;
+        bottom: 4px;
+        left: 4px;
+        width: calc(100% - 1px);
+        height: calc(100% - 1px);
+        }
+
+        .button-53:hover:after {
+        bottom: 2px;
+        left: 2px;
+        }
+
+        @media (min-width: 768px) {
+        .button-53 {
+            padding: .75rem 3rem;
+            font-size: 1.25rem;
+        }
+        }
+    
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #111212;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Select Your Seats</h1>
+
+        <form class="passenger-form" action="{{ url_for('seat_selection', train_id=train_id) }}" method="POST" onsubmit="return updateSelectedSeats();">
+            <label for="passenger-count">Number of Passengers:</label>
+            <input type="number" id="passenger-count" name="passenger_count" min="1" max="6" value="1" required>
+            
+            <div class="seat-container">
+                {% for row in range(1, 11) %}
+                    {% for seat in range(1, 7) %}
+                    <div class="seat" data-seat="{{ row }}{{ seat }}" onclick="selectSeat(this)">
+                        {{ row }}{{ seat }}
+                    </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+
+            <input type="hidden" id="selected-seats" name="selected_seats" value="">
+
+            <div class="button-container">
+                <button class="button-53">Confirm Seats</button>
+            </div>
+        </form>
+
+        <a class="back-link" href="{{ url_for('train_details', train_id=train_id) }}">Back to Train Schedule</a>
+    </div>
+
+    <script>
+                let selectedSeats = [];
+        const passengerCountInput = document.getElementById('passenger-count');
+        const selectedSeatsInput = document.getElementById('selected-seats');
+        const selectedSeatsDisplay = document.getElementById('selected-seats-display');
+
+        function selectSeat(seat) {
+            if (seat.classList.contains('unavailable')) return;
+
+            const maxPassengers = parseInt(passengerCountInput.value, 10);
+            
+            if (seat.classList.contains('selected')) {
+                seat.classList.remove('selected');
+                selectedSeats = selectedSeats.filter(s => s !== seat.dataset.seat);
+            } else {
+                if (selectedSeats.length < maxPassengers) {
+                    seat.classList.add('selected');
+                    selectedSeats.push(seat.dataset.seat);
+                } else {
+                    alert(`You can only select ${maxPassengers} seats.`);
+                }
+            }
+
+            // Update the display of selected seats
+            updateSelectedSeatsDisplay();
+        }
+
+        function updateSelectedSeats() {
+            if (selectedSeats.length === 0) {
+                alert("Please select at least one seat.");
+                return false;
+            }
+            selectedSeatsInput.value = selectedSeats.join(', ');
+            return true; // Allow form submission
+        }
+
+        function updateSelectedSeatsDisplay() {
+            selectedSeatsDisplay.innerText = selectedSeats.length > 0 
+                ? 'Selected Seats: ' + selectedSeats.join(', ') 
+                : 'Selected Seats: None';
+        }
+
+        passengerCountInput.addEventListener('change', function() {
+            const maxSeats = parseInt(this.value, 10);
+            if (selectedSeats.length > maxSeats) {
+                alert('You have selected more seats than passengers.');
+                while (selectedSeats.length > maxSeats) {
+                    const seatToDeselect = selectedSeats.pop();
+                    const seatElement = document.querySelector(`[data-seat='${seatToDeselect}']`);
+                    if (seatElement) {
+                        seatElement.classList.remove('selected');
+                    }
+                }
+            }
+            updateSelectedSeatsDisplay();
+        });
+
+    </script>
+</body>
+</html>

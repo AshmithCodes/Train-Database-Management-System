@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Stations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Add Station Details</h2>
+        <form id="stationForm" action="/add_station" method="POST">
+            <!-- Station Name -->
+            <div class="input-group">
+                <label for="station_name">Station Name</label>
+                <input type="text" id="station_name" name="station_name[]" placeholder="Enter Station Name" required>
+            </div>
+        
+            <!-- Station Code -->
+            <div class="input-group">
+                <label for="station_code">Station Code</label>
+                <input type="text" id="station_code" name="station_code[]" placeholder="Enter Station Code" required>
+            </div>
+        
+            <!-- Add More Stations Button -->
+            <div class="input-group">
+                <button type="button" id="addStationBtn">Add Station</button>
+            </div>
+        
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Submit Stations</button>
+        </form>
+        
+        <a href="{{ url_for('login') }}">Back to login</a>
+    </div>
+
+    <script>
+        // JavaScript to add more station fields
+        document.getElementById('addStationBtn').addEventListener('click', function() {
+        const form = document.getElementById('stationForm');
+
+        // Create a div to wrap new input fields
+        const stationDiv = document.createElement('div');
+        stationDiv.classList.add('input-group');
+
+        // Create input for station name
+        const stationNameLabel = document.createElement('label');
+        stationNameLabel.setAttribute('for', 'station_name');
+        stationNameLabel.textContent = 'Station Name';
+        const stationNameInput = document.createElement('input');
+        stationNameInput.setAttribute('type', 'text');
+        stationNameInput.setAttribute('name', 'station_name[]');
+        stationNameInput.setAttribute('placeholder', 'Enter Station Name');
+        stationNameInput.required = true;
+
+        // Create input for station code
+        const stationCodeLabel = document.createElement('label');
+        stationCodeLabel.setAttribute('for', 'station_code');
+        stationCodeLabel.textContent = 'Station Code';
+        const stationCodeInput = document.createElement('input');
+        stationCodeInput.setAttribute('type', 'text');
+        stationCodeInput.setAttribute('name', 'station_code[]');
+        stationCodeInput.setAttribute('placeholder', 'Enter Station Code');
+        stationCodeInput.required = true;
+
+        // Append elements to the new div
+        stationDiv.appendChild(stationNameLabel);
+        stationDiv.appendChild(stationNameInput);
+        stationDiv.appendChild(stationCodeLabel);
+        stationDiv.appendChild(stationCodeInput);
+
+        // Append the new div to the form (before "Add Another Station" button)
+        form.insertBefore(stationDiv, form.children[form.children.length - 2]);
+    });
+
+    </script>
+</body>
+</html>

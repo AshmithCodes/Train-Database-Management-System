@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Menu</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f3f3f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+/* CSS */
+                .button-24 {
+                background: #FF4742;
+                border: 1px solid #FF4742;
+                border-radius: 6px;
+                box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+                box-sizing: border-box;
+                color: #FFFFFF;
+                cursor: pointer;
+                display: inline-block;
+                font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+                font-size: 16px;
+                font-weight: 800;
+                line-height: 16px;
+                min-height: 40px;
+                outline: 0;
+                padding: 12px 14px;
+                text-align: center;
+                text-rendering: geometricprecision;
+                text-transform: none;
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+                vertical-align: middle;
+                }
+
+                .button-24:hover,
+                .button-24:active {
+                background-color: initial;
+                background-position: 0 0;
+                color: #FF4742;
+                }
+
+                .button-24:active {
+                opacity: .5;
+                }
+
+
+/* CSS */
+                .button-19 {
+                appearance: button;
+                background-color: #1899D6;
+                border: solid transparent;
+                border-radius: 16px;
+                border-width: 0 0 4px;
+                box-sizing: border-box;
+                color: #FFFFFF;
+                cursor: pointer;
+                display: inline-block;
+                font-family: din-round,sans-serif;
+                font-size: 15px;
+                font-weight: 700;
+                letter-spacing: .8px;
+                line-height: 20px;
+                margin: 0;
+                outline: none;
+                overflow: visible;
+                padding: 13px 16px;
+                text-align: center;
+                text-transform: uppercase;
+                touch-action: manipulation;
+                transform: translateZ(0);
+                transition: filter .2s;
+                user-select: none;
+                -webkit-user-select: none;
+                vertical-align: middle;
+                white-space: nowrap;
+                width: 100%;
+                }
+
+                .button-19:after {
+                background-clip: padding-box;
+                background-color: #1CB0F6;
+                border: solid transparent;
+                border-radius: 16px;
+                border-width: 0 0 4px;
+                bottom: -4px;
+                content: "";
+                left: 0;
+                position: absolute;
+                right: 0;
+                top: 0;
+                z-index: -1;
+                }
+
+                .button-19,
+                .button-19:focus {
+                user-select: auto;
+                }
+
+                .button-19:hover:not(:disabled) {
+                filter: brightness(1.1);
+                -webkit-filter: brightness(1.1);
+                }
+
+                .button-19:disabled {
+                cursor: auto;
+                }
+
+                .button-19:active {
+                border-width: 4px 0 0;
+                background: none;
+                }
+                    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Admin Menu</h1>
+
+        <h2>Train List</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>From City</th>
+                    <th>To City</th>
+                    <th>Travel Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for train in trains %}
+                    <tr>
+                        <td>{{ train[0] }}</td>
+                        <td>{{ train[1] }}</td>
+                        <td>{{ train[2] }}</td>
+                        <td>{{ train[3] }}</td>
+                        <td>
+                            <a href="{{ url_for('train_details', train_id=train[0]) }}" class="btn btn-info">View</a>
+                            <a href="{{ url_for('edit_train', train_id=train[0]) }}" class="btn btn-warning">Edit</a>
+                            <form action="{{ url_for('delete_train', train_id=train[0]) }}" method="post" style="display:inline;">
+                                <button class="button-24" role="button">delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">No trains available.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <a href="{{ url_for('getinfo') }}" class="btn btn-primary">Add New Train</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Schedule</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url(https://giffiles.alphacoders.com/759/75930.gif);
+
+            background-size: cover; /* Fills the entire background */
+            background-position: center; /* Centers the gif */
+            background-repeat: no-repeat; /* Prevents repeating */
+            background-attachment: fixed; /* Keeps the gif in place during scroll */
+        }
+
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .train-card {
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            background-color: #ffffff;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .train-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .train-card .route-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .route-info div {
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .train-card .time-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .time-info div {
+            text-align: center;
+        }
+
+        .train-card .additional-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .train-card .additional-info .price {
+            font-size: 1.5em;
+            color: #111111;
+            font-weight: 600;
+        }
+
+        .train-card .additional-info .changes {
+            font-size: 0.9em;
+            color: #f54b4b;
+        }
+
+        .train-card .platform {
+            color: #888;
+        }
+
+        .filter-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .filter-options button {
+            border: none;
+            background-color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #080808;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .filter-options button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #111212;
+            text-decoration: none;
+        }
+
+        .seat-selection-link {
+            font-size: 0.9em;
+            color: #007bff;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .seat-selection-link:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Train Schedule from {{ from_city }} to {{ to_city }} on {{ date }}</h1>
+
+        {% if trains %}
+            {% for train in trains %}
+            <div class="train-card">
+                <a href="{{ url_for('train_details', train_id=train[0]) }}">
+                    <div class="route-info">
+                        <div>{{ train[4] }} - {{ train[5] }}</div>
+                        <div>INR{{ train[9] }}</div>
+                    </div>
+
+                    <div class="time-info">
+                        <div>
+                            <div>{{ train[4] }}</div>
+                            <div>Departure</div>
+                        </div>
+                        <div>-</div>
+                        <div>
+                            <div>{{ train[5] }}</div>
+                            <div>Arrival</div>
+                        </div>
+                    </div>
+
+                    <div class="additional-info">
+                        <div class="platform">Plat. {{ loop.index }} | {{ train[6] }}</div>
+                        <div class="changes">{{ train[8] }} change{{ 's' if train[8] > 1 else '' }}</div>
+                        <div class="price">INR{{ train[9] }}</div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No trains found for the selected route and date.</p>
+        {% endif %}
+
+        <a class="back-link" href="{{ url_for('destination') }}">Search Again</a>
+
+    </div>
+</body>
+</html>

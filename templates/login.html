@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Login Form</title>
+    
+    <style>
+        body {
+            background-image: url(https://64.media.tumblr.com/6da58aa9cd43741b05e92ac09ae02e6b/tumblr_oz4f6bDn0s1vvfsp9o1_540.gif);
+
+            background-size: cover; /* Fills the entire background */
+            background-position: center; /* Centers the gif */
+            background-repeat: no-repeat; /* Prevents repeating */
+            background-attachment: fixed; /* Keeps the gif in place during scroll */
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Form -->
+        <div class="form-box">
+            <h2>LOGIN</h2>
+            <form action="/login" method="POST">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+
+                <div class="extras">
+                    <label><input type="checkbox" name="remember"> Remember me?</label>
+                </div>
+                <p><a href="{{ url_for('create_password') }}">Create your account</a></p>
+                
+                <button class="button-53" role="button">login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
